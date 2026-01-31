@@ -1,0 +1,52 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# Configuration des VMs
+SERVER_NAME = "sanaggarS"
+WORKER_NAME = "sanaggarSW"
+SERVER_IP = "192.168.56.110"
+WORKER_IP = "192.168.56.111"
+
+Vagrant.configure("2") do |config|
+  
+  # Box Ubuntu 24.04 LTS (latest stable)
+  config.vm.box = "bento/ubuntu-24.04"
+  
+  # Dossier partagé pour le token
+  config.vm.synced_folder "./confs", "/vagrant_shared", create: true
+
+  # ========================
+  # VM 1 : Server (Control Plane)
+  # ========================
+  config.vm.define SERVER_NAME do |server|
+    server.vm.hostname = SERVER_NAME
+    server.vm.network "private_network", ip: SERVER_IP
+    
+    server.vm.provider "virtualbox" do |vb|
+      vb.name = SERVER_NAME
+      vb.memory = "1024"
+      vb.cpus = 1
+    end
+    
+    # Script d'installation K3s Server
+    server.vm.provision "shell", path: "scripts/server.sh", args: [SERVER_IP]
+  end
+
+  # ========================
+  # VM 2 : ServerWorker (Agent)
+  # ========================
+  config.vm.define WORKER_NAME do |worker|
+    worker.vm.hostname = WORKER_NAME
+    worker.vm.network "private_network", ip: WORKER_IP
+    
+    worker.vm.provider "virtualbox" do |vb|
+      vb.name = WORKER_NAME
+      vb.memory = "1024"
+      vb.cpus = 1
+    end
+    
+    # Script d'installation K3s Agent
+    worker.vm.provision "shell", path: "scripts/worker.sh", args: [SERVER_IP, WORKER_IP]
+  end
+
+end
