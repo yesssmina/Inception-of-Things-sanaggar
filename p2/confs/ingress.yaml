@@ -1,0 +1,45 @@
+# ============================================
+# INGRESS - Routage selon le HOST
+# ============================================
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: app-ingress
+  annotations:
+    ingress.kubernetes.io/ssl-redirect: "false"
+spec:
+  rules:
+  # app1.com -> app-one
+  - host: app1.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: app-one-svc
+            port:
+              number: 80
+  
+  # app2.com -> app-two
+  - host: app2.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: app-two-svc
+            port:
+              number: 80
+  
+  # Défaut (pas de host) -> app-three
+  - http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: app-three-svc
+            port:
+              number: 80
