@@ -1,38 +1,42 @@
-# ============================================
 # APP ONE - Deployment + Service
-# ============================================
+# 1 replica, accessible via app1.com
+
+# Deployment: defines how to run the application
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: app-one
+  name: app-one                    # Name of this deployment
   labels:
-    app: app-one
+    app: app-one                   # Label to identify this app
 spec:
-  replicas: 1
+  replicas: 1                      # Number of pod copies to run
   selector:
     matchLabels:
-      app: app-one
+      app: app-one                 # Select pods with this label
   template:
     metadata:
       labels:
-        app: app-one
+        app: app-one               # Label applied to created pods
     spec:
       containers:
-      - name: app-one
-        image: paulbouwer/hello-kubernetes:1.10
+      - name: app-one              # Container name
+        image: paulbouwer/hello-kubernetes:1.10  # Docker image to use
         ports:
-        - containerPort: 8080
+        - containerPort: 8080      # Port the app listens on inside container
         env:
-        - name: MESSAGE
-          value: "Hello from app1!"
+        - name: MESSAGE            # Environment variable
+          value: "Hello from app1."  # Message displayed by the app
+
 ---
+
+# Service: exposes the pods to the network
 apiVersion: v1
 kind: Service
 metadata:
-  name: app-one-svc
+  name: app-one-svc                # Name of this service
 spec:
   selector:
-    app: app-one
+    app: app-one                   # Route traffic to pods with this label
   ports:
-  - port: 80
-    targetPort: 8080
+  - port: 80                       # Port exposed by the service
+    targetPort: 8080               # Port on the container to forward to

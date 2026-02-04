@@ -1,6 +1,5 @@
-# ============================================
-# INGRESS - Routage selon le HOST
-# ============================================
+# INGRESS - HTTP routing based on HOST header
+
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
@@ -33,7 +32,7 @@ spec:
             port:
               number: 80
   
-  # Défaut (pas de host) -> app-three
+  #Default (no host specified) -> app-three
   - http:
       paths:
       - path: /

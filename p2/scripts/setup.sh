@@ -1,34 +1,36 @@
 #!/bin/bash
 
-# ============================================
-# Script d'installation K3s SERVER + Apps
-# ============================================
+# K3s SERVER Installation Script + Apps Deployment
 
 SERVER_IP="192.168.56.110"
 
-echo "[INFO] Installation de K3s en mode SERVER..."
+echo "[INFO] Installing K3s in SERVER mode..."
 
-# Installation de K3s
-curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="server --node-ip=${SERVER_IP} --bind-address=${SERVER_IP} --advertise-address=${SERVER_IP} --write-kubeconfig-mode=644" sh -
+# Install K3s
+curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="server \
+    --node-ip=${SERVER_IP} \
+    --bind-address=${SERVER_IP} \
+    --advertise-address=${SERVER_IP} \
+    --write-kubeconfig-mode=644" sh -
 
-# Attendre que K3s soit prêt
-echo "[INFO] Attente du démarrage de K3s..."
+# Wait for K3s to be ready
+echo "[INFO] Waiting for K3s to start..."
 sleep 15
 
-# Vérifier que K3s fonctionne
+# Verify K3s is working
 kubectl get nodes
 
-# Appliquer les configurations Kubernetes
-echo "[INFO] Déploiement des applications..."
+# Apply Kubernetes configurations
+echo "[INFO] Deploying applications..."
 kubectl apply -f /vagrant_confs/
 
-# Attendre que les pods soient prêts
-echo "[INFO] Attente du démarrage des pods..."
+# Wait for pods to be ready
+echo "[INFO] Waiting for pods to start..."
 sleep 10
 
-# Afficher l'état final
-echo "[INFO] État du cluster :"
+# Display final state
+echo "[INFO] Cluster status:"
 kubectl get all
 kubectl get ingress
 
-echo "[INFO] Installation terminée !"
+echo "[INFO] Setup completed!"
