@@ -1,3 +1,7 @@
+# Argo CD Application - GitOps Configuration
+# This resource tells Argo CD to monitor a Git repo
+# and automatically deploy its contents to the cluster
+
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
