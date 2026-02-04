@@ -1,11 +1,9 @@
 #!/bin/bash
 
-# Bonus - Gitlab Installation + Argo CD reconfiguration
-# Inception of Things
+#Gitlab Installation + Argo CD reconfiguration
 
 set -e
 
-# Colors
 GREEN='\033[0;32m'
 BLUE='\033[0;34m'
 YELLOW='\033[1;33m'

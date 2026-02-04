@@ -1,5 +1,4 @@
 # Argo CD Application pointing to local Gitlab
-# Inception of Things - Bonus
 
 apiVersion: argoproj.io/v1alpha1
 kind: Application
