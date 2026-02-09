@@ -8,7 +8,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: http://gitlab.gitlab.svc.cluster.local/root/sanaggar-iot-app.git
+    repoURL: http://gitlab.gitlab.svc.cluster.local/root/sanaggar-iot-gitlab.git
     targetRevision: HEAD
     path: .
   destination:
