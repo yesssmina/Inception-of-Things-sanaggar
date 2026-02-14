@@ -8,6 +8,8 @@ SERVER_IP = "192.168.56.110"
 WORKER_IP = "192.168.56.111"
 
 Vagrant.configure("2") do |config|
+
+  config.vm.boot_timeout = 600
   
   # Box Ubuntu 24.04 LTS (latest stable)
   config.vm.box = "bento/ubuntu-24.04"
