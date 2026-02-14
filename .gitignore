@@ -1,2 +1,4 @@
 .vagrant/
 **/confs/node-token
+*.box
+*.log
